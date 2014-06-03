@@ -4,7 +4,7 @@ require 'net/http'
 require 'json'
 
 module GeoApi
-  class Location
+  class LocationService
     #extend SetLog
     include Singleton
 

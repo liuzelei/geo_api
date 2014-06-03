@@ -13,7 +13,7 @@ describe "test location" do
     databack["latitude"] = "31.172419183453"
     databack["longitude"] = "121.50055678999"
 
-    location = GeoApi::Location.instance.get_location_from_string(location_str)
+    location = GeoApi::LocationService.instance.get_location_from_string(location_str)
 
     location.should == databack
   end
@@ -30,7 +30,7 @@ describe "test location" do
     databack["latitude"] = "39.983424051248"
     databack["longitude"] = "116.32298703399"
 
-    location = GeoApi::Location.instance.get_location_from_coordinate(latitude, longitude)
+    location = GeoApi::LocationService.instance.get_location_from_coordinate(latitude, longitude)
 
     location.should == databack
   end
