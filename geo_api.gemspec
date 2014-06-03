@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = GeoApi::VERSION
   spec.authors       = ["liuzelei"]
   spec.email         = ["liuzelei@gmail.com"]
-  spec.description   = '基础地理位置服务'
-  spec.summary       = '提供字符串解析,经纬度解析映射等'
+  spec.description   = '%q{基础地理位置服务}'
+  spec.summary       = '%q{提供字符串解析,经纬度解析映射等}'
   spec.homepage      = ""
   spec.license       = "MIT"
 
