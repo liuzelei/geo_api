@@ -22,8 +22,8 @@ module GeoApi
       end
     end
 
-    def get_location_from_coordinate(latitude, longitude)
-      params = { location: "%s, %s" % [latitude, longitude] }
+    def get_location_from_coordinate(latitude, longitude, coordtype = 'bd09ll')
+      params = { location: "%s, %s" % [latitude, longitude], coordtype: coordtype }
       result = send_request(params)
 
       if result && result["status"] == 0 && result["result"]
