@@ -23,4 +23,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "guard", "~> 2.6"
   spec.add_development_dependency "guard-rspec"
+
+  spec.add_runtime_dependency 'rails'
+  spec.add_runtime_dependency "bson"
+  spec.add_runtime_dependency "mongoid"
 end

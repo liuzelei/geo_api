@@ -2,6 +2,7 @@
 require "geo_api/version"
 require 'geo_api/location'
 require 'geo_api/configuration'
+require 'geo_api/models/location_log'
 
 module GeoApi
   class << self
@@ -12,5 +13,6 @@ module GeoApi
     def config
       @config ||= Configuration.new
     end
+
   end
 end
