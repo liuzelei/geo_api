@@ -4,7 +4,7 @@ require 'net/http'
 require 'json'
 
 module GeoApi
-  class Location
+  class LocationService
     include Singleton
 
     def get_location_from_string(location)
@@ -23,8 +23,8 @@ module GeoApi
       end
     end
 
-    def get_location_from_coordinate(latitude, longitude)
-      params = { location: "%s, %s" % [latitude, longitude] }
+    def get_location_from_coordinate(latitude, longitude, coordtype = 'bd09ll')
+      params = { location: "%s, %s" % [latitude, longitude], coordtype: coordtype }
       result = send_request(params)
 
       if result && result["status"] == 0 && result["result"]
@@ -51,16 +51,23 @@ module GeoApi
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
 
-      log = GeoApi::Models::LocationLog.new(request_body: params.to_json, response_body: res.body)
+      log = GeoApi::Models::LocationLog.new
+      log.url = uri
+      begin
+        log.request = JSON.parse(params.to_json)
+      rescue
+        log.raw_request = params
+      end
+      log.response = JSON.parse(res.body) 
 
       log.save
+
+      p ("========#{log.id}")
 
       result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)
       return result
     end
 
-    def set_log
 
-    end
   end
 end

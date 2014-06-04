@@ -4,9 +4,10 @@ module GeoApi
     class LocationLog
       include Mongoid::Document
 
-      
-      field :request_body, type: String
-      field :response_body, type: String
+      field :url, type: String
+      field :request, type: Hash
+      field :raw_request, type: String
+      field :response, type: Hash
 
     end
   end
