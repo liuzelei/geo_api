@@ -38,6 +38,6 @@ end
 
 RSpec.configure do |config|
   config.before(:each) do
-    Mongoid.purge!
+    # Mongoid.purge!
   end
 end

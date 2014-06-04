@@ -17,6 +17,10 @@ describe "test location" do
     location["region"].should == "城北区"
   end
 
+  
+end
+
+describe "test location form coordinate" do
   it "should get location by coordinate" do
     latitude = "39.9834"
     longitude = "116.3229"
