@@ -13,7 +13,7 @@ module GeoApi
 
       unless location.blank?
         
-        formated_address = location.split(/,|-|;/)
+        formated_address = location.split(/,|-|;|>|:|\+|\^/)
         databack = Hash.new
         databack["province"] = formated_address[0] if formated_address.length > 0
         databack["city"] = formated_address[1] if formated_address.length > 1
@@ -69,11 +69,10 @@ module GeoApi
       rescue
         log.raw_request = params
       end
-      GeoApi.logger.debug res.body
-      log.response = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess) && !res.body.blank?
+      log.response = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)# && !res.body.blank?
       log.save
-      result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess) && !res.body.blank?
-      GeoApi.logger.debug res.body
+      result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)# && !res.body.blank?
+
       return result
     end
 
