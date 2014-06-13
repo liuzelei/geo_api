@@ -8,14 +8,24 @@ module GeoApi
     include Singleton
 
     def get_location_from_string(location)
-      params = { address: location }
-      result = send_request(params)
+      #params = { address: location }
+      #result = send_request(params)
 
-      if result && result["status"] == 0 && result["result"]
-        latitude = result["result"]["location"]["lat"].to_s
-        longitude = result["result"]["location"]["lng"].to_s
+      unless location.blank?
+        
+        formated_address = location.split(/,|-|;/)
+        databack = Hash.new
+        databack["province"] = formated_address[0] if formated_address.length > 0
+        databack["city"] = formated_address[1] if formated_address.length > 1
+        databack["region"] = formated_address[2] if formated_address.length > 2
+        databack["detail"] = formated_address[3] if formated_address.length > 3
+        databack["latitude"] = ""
+        databack["longitude"] = ""
 
-        databack = get_location_from_coordinate(latitude, longitude)
+        if ["重庆市", "上海市", "北京市", "天津市"].include?(databack["province"])
+          databack["region"] = databack["city"]
+          databack["city"] = databack["province"]
+        end
 
         return databack
       else
