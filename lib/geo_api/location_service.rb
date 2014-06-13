@@ -19,7 +19,7 @@ module GeoApi
 
         return databack
       else
-        return ""
+        return nil
       end
     end
 
@@ -39,7 +39,7 @@ module GeoApi
 
         return databack
       else
-        return ""
+        return nil
       end
     end
 
