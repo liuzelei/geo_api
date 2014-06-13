@@ -16,22 +16,38 @@ describe "test location" do
     location = GeoApi::LocationService.instance.get_location_from_string(location_str)
 
     expect(location).to eq(databack)
+
+    location = GeoApi::LocationService.instance.get_location_from_string("上海灵岩路79弄1号")
+    expect(location["province"]).to eq("上海市")
+    expect(location["city"]).to eq("上海市")
+    expect(location["region"]).to eq("浦东新区")
+
+    location = GeoApi::LocationService.instance.get_location_from_string("")
+    expect(location).to eq("")
+
+    location = GeoApi::LocationService.instance.get_location_from_string("小桥大街西宁")
+    expect(location["province"]).to eq("青海省")
+    expect(location["city"]).to eq("西宁市")
+    expect(location["region"]).to eq("城北区")
   end
+end
 
+describe "test location form coordinate" do
   it "should get location by coordinate" do
-    latitude = "39.983424"
-    longitude = "116.322987"
-
-    databack = Hash.new
-    databack["province"] = "北京市"
-    databack["city"] = "北京市"
-    databack["region"] = "海淀区" 
-    databack["detail"] = "中关村大街27号1101-08室"
-    databack["latitude"] = "39.983424051248"
-    databack["longitude"] = "116.32298703399"
+    latitude = "39.9834"
+    longitude = "116.3229"
 
     location = GeoApi::LocationService.instance.get_location_from_coordinate(latitude, longitude)
+    expect(location["province"]).to eq("北京市")
+    expect(location["city"]).to eq("北京市")
+    expect(location["region"]).to eq("海淀区")
 
-    expect(location).to eq(databack)
+    latitude = "36.66"
+    longitude = "101.76"
+
+    location = GeoApi::LocationService.instance.get_location_from_coordinate(latitude, longitude)
+    expect(location["province"]).to eq("青海省")
+    expect(location["city"]).to eq("西宁市")
+    expect(location["region"]).to eq("城北区")
   end
 end

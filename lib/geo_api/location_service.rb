@@ -18,6 +18,8 @@ module GeoApi
         databack = get_location_from_coordinate(latitude, longitude)
 
         return databack
+      else
+        return ""
       end
     end
 
@@ -36,6 +38,8 @@ module GeoApi
         databack["longitude"] = result["result"]["location"]["lng"].to_s
 
         return databack
+      else
+        return ""
       end
     end
 
@@ -47,9 +51,22 @@ module GeoApi
       uri.query = URI.encode_www_form(params)
       GeoApi.logger.debug uri.inspect
       res = Net::HTTP.get_response(uri)
-      result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)
+
+      log = GeoApi::Models::LocationLog.new
+      log.url = uri
+      begin
+        log.request = JSON.parse(params.to_json)
+      rescue
+        log.raw_request = params
+      end
+      GeoApi.logger.debug res.body
+      log.response = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess) && !res.body.blank?
+      log.save
+      result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess) && !res.body.blank?
       GeoApi.logger.debug res.body
       return result
     end
+
+
   end
 end
