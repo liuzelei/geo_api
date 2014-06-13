@@ -15,7 +15,7 @@ describe "test location" do
 
     location = GeoApi::LocationService.instance.get_location_from_string(location_str)
 
-    location.should == databack
+    expect(location).to eq(databack)
   end
 
   it "should get location by coordinate" do
@@ -32,6 +32,6 @@ describe "test location" do
 
     location = GeoApi::LocationService.instance.get_location_from_coordinate(latitude, longitude)
 
-    location.should == databack
+    expect(location).to eq(databack)
   end
 end

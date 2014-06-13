@@ -5,7 +5,6 @@ require 'json'
 
 module GeoApi
   class LocationService
-    #extend SetLog
     include Singleton
 
     def get_location_from_string(location)
@@ -13,10 +12,10 @@ module GeoApi
       result = send_request(params)
 
       if result && result["status"] == 0 && result["result"]
-        lat = result["result"]["location"]["lat"].to_s
-        lng = result["result"]["location"]["lng"].to_s
+        latitude = result["result"]["location"]["lat"].to_s
+        longitude = result["result"]["location"]["lng"].to_s
 
-        databack = get_location_from_coordinate(lat,lng)
+        databack = get_location_from_coordinate(latitude, longitude)
 
         return databack
       end
@@ -46,8 +45,10 @@ module GeoApi
       params[:ak] = GeoApi.config.key
       params[:output] = 'json'
       uri.query = URI.encode_www_form(params)
+      GeoApi.logger.debug uri.inspect
       res = Net::HTTP.get_response(uri)
       result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)
+      GeoApi.logger.debug res.body
       return result
     end
   end
