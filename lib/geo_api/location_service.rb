@@ -53,9 +53,23 @@ module GeoApi
       end
     end
 
+    def coord_to_baidu(coords, from, to)
+      params = { coords: coords, from: from, to: to }
+      result = send_request(params, 1)
+
+      if result && result["status"] == 0 && result["result"]
+        return result["result"]
+      else
+        return nil
+      end
+    end
+
     private
-    def send_request(params)
+    def send_request(params,url_type = nil)
       uri = URI(GeoApi.config.server)
+      if url_type
+        uri = URI(GeoApi.config.convert_server)
+      end
       params[:ak] = GeoApi.config.key
       params[:output] = 'json'
       uri.query = URI.encode_www_form(params)
