@@ -33,3 +33,7 @@
     databack["detail"] = "灵岩路79弄-1号"
     databack["latitude"] = "31.172419183453"
     databack["longitude"] = "121.50055678999"
+
+#### 将其他坐标转换为百度坐标
+
+  GeoApi::LocationService.instance.coord_to_baidu("121.4660492,31.2117575;121.4664967,31.2111130", "3", "5")
