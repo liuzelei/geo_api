@@ -58,14 +58,21 @@ describe "test location form coordinate" do
 
 
   it "should coord to baidu" do
-    data_back = GeoApi::LocationService.instance.coord_to_baidu("121.4660492,31.2117575;121.4664967,31.2111130", "3", "5")
+    coords = []
+
+    123.times do 
+      coords << "121.4660492,31.2117575"
+      coords << "121.4664967,31.2111130"
+    end
+
+    data_back = GeoApi::LocationService.instance.coord_to_baidu(coords.join(';'), "3", "5")
     start_x = "121.47254115402"
     start_y = "31.217835218563"
     end_x = "121.47299026673"
     end_y = "31.217182204029"
 
     data_back.each_with_index do |result, index|
-      if index == 0 
+      if index % 2 == 0
           expect(result["x"].to_s).to eq(start_x)
           expect(result["y"].to_s).to eq(start_y)
       else
