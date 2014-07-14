@@ -22,6 +22,31 @@ describe "test location" do
 end
 
 describe "test location form coordinate" do
+
+  it "should coord to baidu" do
+    coords = []
+
+    500.times do 
+      coords << "121.4660492,31.2117575"
+      coords << "121.4664967,31.2111130"
+    end
+
+    data_back = GeoApi::LocationService.instance.coord_to_baidu(coords.join(';'), "3", "5")
+    start_x = "121.47254115402"
+    start_y = "31.217835218563"
+    end_x = "121.47299026673"
+    end_y = "31.217182204029"
+
+    data_back.each_with_index do |result, index|
+      if index % 2 == 0
+          expect(result["x"].to_s).to eq(start_x)
+          expect(result["y"].to_s).to eq(start_y)
+      else
+          expect(result["x"].to_s).to eq(end_x)
+          expect(result["y"].to_s).to eq(end_y)
+      end
+    end
+
   it "should get location by coordinate" do
     latitude = "39.9834"
     longitude = "116.3229"
@@ -39,20 +64,4 @@ describe "test location form coordinate" do
     expect(location["city"]).to eq("西宁市")
     expect(location["region"]).to eq("城北区")
   end
-
-  # it "should test baidu geo api" do
-  #   correct_counter = 0
-  #   faild_counter = 0
-  #   GeoApi.logger.debug("begin")
-  #   10000.times do |time|
-  #     begin
-  #       GeoApi::LocationService.instance.get_location_from_coordinate("39.9834", "116.3229")
-  #       correct_counter = correct_counter + 1
-  #     rescue
-  #       faild_counter = faild_counter + 1
-  #     end
-  #     GeoApi.logger.debug("#{time}--#{Time.now}")
-  #   end
-  #   GeoApi.logger.debug("#{faild_counter}/#{correct_counter}")
-  # end
 end
