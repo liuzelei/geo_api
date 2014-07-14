@@ -53,7 +53,7 @@ module GeoApi
       end
     end
 
-    def coord_to_baidu(coords, from, to)
+    def coord_to_baidu(coords, from = "1", to = "5")
       coords_array = coords.split(';')
       data_back = common_to_baidu(coords_array.take(100).join(';'), from, to)
       new_array = coords_array[100,coords_array.length - 1]

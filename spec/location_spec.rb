@@ -60,7 +60,7 @@ describe "test location form coordinate" do
   it "should coord to baidu" do
     coords = []
 
-    123.times do 
+    500.times do 
       coords << "121.4660492,31.2117575"
       coords << "121.4664967,31.2111130"
     end
