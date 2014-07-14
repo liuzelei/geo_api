@@ -1,4 +1,7 @@
 # encoding utf-8
+require 'coveralls'
+Coveralls.wear!
+
 require 'bundler/setup'
 require 'geo_api'
 require 'mongoid'
