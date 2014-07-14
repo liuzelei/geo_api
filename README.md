@@ -2,6 +2,10 @@
 
 位置接口,目前调用百度地理位置api获取格式化的地理位置数据.
 
+[![Travis](https://travis-ci.org/liuzelei/geo_api.svg?branch=master)](https://travis-ci.org/liuzelei/geo_api)
+[![Code Climate](https://codeclimate.com/github/liuzelei/geo_api.png)](https://codeclimate.com/github/liuzelei/geo_api)
+[![Coverage Status](https://coveralls.io/repos/liuzelei/geo_api/badge.png)](https://coveralls.io/r/liuzelei/geo_api)
+
 ## 安装
 
 添加以下代码到Gemfile:
