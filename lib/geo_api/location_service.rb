@@ -53,6 +53,17 @@ module GeoApi
       end
     end
 
+    def get_coordinate_from_string(location, city = nil)
+      params = { address: location, city: city }
+      result = send_request(params)
+
+      if result["status"] == 0
+        return result["result"]
+      else
+        return nil
+      end
+    end
+
     def coord_to_baidu(coords, from = "1", to = "5")
       coords_array = coords.split(';')
       data_back = common_to_baidu(coords_array.take(100).join(';'), from, to)

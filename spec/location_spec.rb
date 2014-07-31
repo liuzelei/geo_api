@@ -65,4 +65,19 @@ describe "test location form coordinate" do
     expect(location["city"]).to eq("西宁市")
     expect(location["region"]).to eq("城北区")
   end
+
+  it "should get coordinate from  string" do
+    result = GeoApi::LocationService.instance.get_coordinate_from_string("思南路115弄")
+
+    expect(result).not_to be_empty
+
+    result = GeoApi::LocationService.instance.get_coordinate_from_string("思南路115弄","上海市")
+   
+    expect(result).not_to be_empty
+
+    result = GeoApi::LocationService.instance.get_coordinate_from_string("")
+    
+    expect(result).to eq(nil)
+
+  end
 end
