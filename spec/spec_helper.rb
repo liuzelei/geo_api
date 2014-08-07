@@ -35,9 +35,13 @@ Mongoid.configure do |config|
 end
 
 GeoApi.setup do |config|
+  # config.server = "http://api.map.baidu.com/geocoder/v2/"
+  # config.convert_server = "http://api.map.baidu.com/geoconv/v1/"
+  # config.key = "m48tmnl9BPwnhNOctmrVKMRa"
+
   config.server = "http://api.map.baidu.com/geocoder/v2/"
-  config.convert_server = "http://api.map.baidu.com/geoconv/v1/"
-  config.key = "09f24306fde8dd0f7e73a3f977c2c584"
+  config.convert_server = "http://apis.map.qq.com/ws/coord/v1/translate"
+  config.key = "NM2BZ-V3HRG-ZHMQO-IPJQD-Q375T-EPFRZ"
 end
 
 RSpec.configure do |config|
