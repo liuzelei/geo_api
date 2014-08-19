@@ -101,15 +101,11 @@ module GeoApi
       end
       return data_back.compact
     end
-
     
 
     private
-    def send_request(params, url_type = nil)
+    def send_request(params)
       uri = URI(GeoApi.config.server)
-      if url_type
-        uri = URI(GeoApi.config.convert_server)
-      end
       params[:output] = 'json'
       uri.query = URI.encode_www_form(params)
       GeoApi.logger.debug "=====#{uri.inspect}"
