@@ -33,17 +33,16 @@ module GeoApi
       end
     end
 
-    def get_location_from_coordinate(latitude, longitude, coordtype = 'bd09ll')
-      params = { location: "%s, %s" % [latitude, longitude], coordtype: coordtype, ak: GeoApi.config.key }
+    def get_location_from_coordinate(latitude, longitude, coordtype = 5)
+      params = { location: "%s,%s" % [latitude, longitude], coordtype: coordtype, key: GeoApi.config.key }
       result = send_request(params)
-
       if result && result["status"] == 0 && result["result"]
-
         databack = Hash.new
-        databack["province"] = result["result"]["addressComponent"]["province"]
-        databack["city"] = result["result"]["addressComponent"]["city"]
-        databack["region"] = result["result"]["addressComponent"]["district"]
-        databack["detail"] = result["result"]["addressComponent"]["street"] + result["result"]["addressComponent"]["street_number"]
+        databack["address"] = result["result"]["address"]
+        databack["province"] = result["result"]["address_component"]["province"]
+        databack["city"] = result["result"]["address_component"]["city"]
+        databack["region"] = result["result"]["address_component"]["district"]
+        databack["detail"] = result["result"]["address_component"]["street"] + result["result"]["address_component"]["street_number"]
         databack["latitude"] = result["result"]["location"]["lat"].to_s
         databack["longitude"] = result["result"]["location"]["lng"].to_s
 
@@ -54,7 +53,7 @@ module GeoApi
     end
 
     def get_coordinate_from_string(location, city = nil)
-      params = { address: location, city: city, ak: GeoApi.config.key }
+      params = { address: location, region: city, key: GeoApi.config.key }
       result = send_request(params)
 
       if result["status"] == 0
@@ -64,53 +63,13 @@ module GeoApi
       end
     end
 
-    def coord_to_baidu(coords, from = "1", to = "5")
-      coords_array = coords.split(';')
-      data_back = common_to_baidu(coords_array.take(100).join(';'), from, to)
-      new_array = coords_array[100,coords_array.length - 1]
-      unless new_array.nil?
-        count = 1
-        while new_array.length > 0
-          new_data_back = common_to_baidu(new_array.take(100).join(';'), from, to)
-          data_back.concat(new_data_back) 
-          count += 1
-          new_array = coords_array[100 * count, coords_array.length - 1]
-          if new_array.nil?
-            new_array = []
-          end
-        end
-      end
-      return data_back.compact
-    end
-
-    def coord_to_gcj(coords, type = '1')
-      coords_array = coords.split(';')
-      data_back = common_to_gcj(coords_array.take(20).join(';'), type)
-      new_array = coords_array[20,coords_array.length - 1]
-      unless new_array.nil?
-        count = 1
-        while new_array.length > 0
-          new_data_back = common_to_gcj(new_array.take(20).join(';'), type)
-          data_back.concat(new_data_back) 
-          count += 1
-          new_array = coords_array[20 * count, coords_array.length - 1]
-          if new_array.nil?
-            new_array = []
-          end
-        end
-      end
-      return data_back.compact
-    end
-    
 
     private
     def send_request(params)
       uri = URI(GeoApi.config.server)
       params[:output] = 'json'
       uri.query = URI.encode_www_form(params)
-      GeoApi.logger.debug "=====#{uri.inspect}"
       res = Net::HTTP.get_response(uri)
-
       log = GeoApi::Models::LocationLog.new
       log.url = uri
       begin
@@ -124,29 +83,6 @@ module GeoApi
 
       return result
     end
-
-    def common_to_baidu(coords, from, to)
-      params = { coords: coords, from: from, to: to, ak: GeoApi.config.key }
-      result = send_request(params, 1)
-
-      if result && result["status"] == 0 && result["result"]
-        return result["result"]
-      else
-        return nil
-      end
-    end
-
-    def common_to_gcj(coords, type = '1')
-      params = { locations: coords, type: type, key: GeoApi.config.key }
-      data = send_request(params, "1")
-
-      if data && data["status"] == 0
-        return data["locations"]
-      else
-        return nil
-      end
-    end
-
 
   end
 end

@@ -39,8 +39,7 @@ GeoApi.setup do |config|
   # config.convert_server = "http://api.map.baidu.com/geoconv/v1/"
   # config.key = "m48tmnl9BPwnhNOctmrVKMRa"
 
-  config.server = "http://api.map.baidu.com/geocoder/v2/"
-  config.convert_server = "http://apis.map.qq.com/ws/coord/v1/translate"
+  config.server = "http://apis.map.qq.com/ws/geocoder/v1/"
   config.key = "NM2BZ-V3HRG-ZHMQO-IPJQD-Q375T-EPFRZ"
 end
 

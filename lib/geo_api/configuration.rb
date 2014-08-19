@@ -2,19 +2,11 @@
 module GeoApi
   class Configuration
     def server
-      @server ||= "http://api.map.baidu.com/geocoder/v2/"
+      @server ||= "http://apis.map.qq.com/ws/geocoder/v1"
     end
 
     def server=(server)
       @server = server
-    end
-
-    def convert_server
-      @convert_server ||= "http://api.map.baidu.com/geoconv/v1/"
-    end
-
-    def convert_server=(convert_server)
-      @convert_server = convert_server
     end
 
     def key
