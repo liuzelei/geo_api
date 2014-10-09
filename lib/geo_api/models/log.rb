@@ -1,7 +1,7 @@
 require 'mongoid'
 module GeoApi
   module Models
-    class LocationLog
+    class Log
       include Mongoid::Document
 
       field :url, type: String
