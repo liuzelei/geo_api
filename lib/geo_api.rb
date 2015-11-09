@@ -1,7 +1,6 @@
 # encoding: utf-8
 require "geo_api/version"
 require 'geo_api/configuration'
-require 'geo_api/models/log'
 require 'logger'
 require 'net/http'
 require 'json'
@@ -21,7 +20,7 @@ module GeoApi
     end
 
     def get_location_from_string(location)
-      unless location.blank?
+      if !location.nil? && !location.empty?
         formated_address = location.split(/,|-|;|>|:|\+|\^/)
         databack = Hash.new
         databack["province"] = formated_address[0] if formated_address.length > 0
@@ -78,15 +77,6 @@ module GeoApi
       params[:output] = 'json'
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
-      log = GeoApi::Models::Log.new
-      log.url = uri
-      begin
-        log.request = JSON.parse(params.to_json)
-      rescue
-        log.raw_request = params
-      end
-      log.response = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)# && !res.body.blank?
-      log.save
       result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)# && !res.body.blank?
 
       return result
