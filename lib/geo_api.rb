@@ -50,7 +50,7 @@ module GeoApi
         databack["province"] = result["result"]["address_component"]["province"]
         databack["city"] = result["result"]["address_component"]["city"]
         databack["region"] = result["result"]["address_component"]["district"]
-        databack["detail"] = result["result"]["address_component"]["street"] + result["result"]["address_component"]["street_number"]
+        databack["detail"] = "#{result['result']['address_component']['street']}#{result['result']['address_component']['street_number']}"
         databack["latitude"] = result["result"]["location"]["lat"].to_s
         databack["longitude"] = result["result"]["location"]["lng"].to_s
 
