@@ -1,8 +1,7 @@
-# encoding: utf-8
 module GeoApi
   class Configuration
     def server
-      @server ||= "http://apis.map.qq.com/ws/geocoder/v1"
+      @server ||= "http://api.map.baidu.com/geocoder/v2/"
     end
 
     def server=(server)
@@ -15,6 +14,14 @@ module GeoApi
 
     def key=(key)
       @key = key
+    end
+
+    def vendor
+      @vendor ||= 'BAIDU'
+    end
+
+    def vendor=(vendor)
+      @vendor = vendor
     end
   end
 end
